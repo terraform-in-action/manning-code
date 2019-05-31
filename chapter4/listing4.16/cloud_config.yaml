@@ -1,0 +1,17 @@
+write_files:
+  -   path: /etc/server.conf
+      owner: root:root
+      permissions: "0644"
+      content: |
+        {
+          "user":  "${user}",
+          "password": "${password}",
+          "database": "${database}",
+          "netloc": "${hostname}:${port}"
+        }
+runcmd:
+  - [ wget, "https://s3-us-west-2.amazonaws.com/terraform-in-action/bootstrap.sh", -O, /run/bootstrap.sh ] #B
+  - chmod 755 /run/bootstrap.sh
+  - /run/bootstrap.sh
+packages:
+  - wget

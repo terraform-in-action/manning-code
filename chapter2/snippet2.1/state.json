@@ -1,0 +1,26 @@
+{
+    "version": 4,
+    "terraform_version": "0.12.0",
+    "serial": 1,
+    "lineage": "54672c85-e734-b244-734a-7b5ba17888a3",
+    "outputs": {},
+    "resources": [
+        {
+            "mode": "managed",
+            "type": "local_file",
+            "name": "literature",
+            "provider": "provider.local",
+            "instances": [
+                {
+                    "schema_version": 0,
+                    "attributes": {
+                        "content": "Sun Tzu said: The art of war is of vital importance #to the State.\n\nIt is a matter of life and death, a road either to safety or to \nruin. Hence it is a subject of inquiry which can on no account be\nneglected.\n",
+                        "filename": "art_of_war.txt",
+                        "id": "907b35148fa2bce6c92cba32410c25b06d24e9af",
+                        "sensitive_content": null
+                    }
+                }
+            ]
+        }
+    ]
+}
