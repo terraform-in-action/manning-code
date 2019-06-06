@@ -1,3 +1,10 @@
+terraform {
+  required_version = ">= 0.12.0"
+  required_providers {
+    random = ">= 2.1"
+  }
+}
+
 variable "words" {
     default = {
         nouns = ["army", "panther", "walnuts", "sandwich", "Zeus", "banana", "cat", "jellyfish", "jigsaw", "violin", "milk", "sun"]

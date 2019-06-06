@@ -1,5 +1,4 @@
 #cloud-config
-
 write_files:
   -   path: /etc/server.conf
       owner: root:root
@@ -12,8 +11,10 @@ write_files:
           "netloc": "${hostname}:${port}"
         }
 runcmd:
-  - [ wget, "https://s3-us-west-2.amazonaws.com/terraform-in-action/bootstrap.sh", -O, /run/bootstrap.sh ]
-  - chmod 755 /run/bootstrap.sh
-  - /run/bootstrap.sh
+  - curl -sL https://api.github.com/repos/scottwinkler/vanilla-webserver-src/releases/latest | jq -r ".assets[].browser_download_url" | wget -qi -
+  - unzip deployment.zip
+  - ./deployment/server
 packages:
+  - jq
   - wget
+  - unzip

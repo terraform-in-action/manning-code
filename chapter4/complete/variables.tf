@@ -1,10 +1,16 @@
 variable "namespace" {
   description = "The project namespace to use for unique resource naming"
-  type = string
+  type        = string
+}
+
+variable "ssh_keypair" {
+  description = "SSH keypair to use for EC2 instance"
+  default     = null
+  type        = string
 }
 
 variable "aws_region" {
   description = "AWS region"
-  default = "us-west-2"
-  type = string
+  default     = "us-west-2"
+  type        = string
 }

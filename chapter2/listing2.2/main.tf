@@ -1,3 +1,10 @@
+terraform {
+  required_version = ">= 0.12.0"
+  required_providers {
+    local = ">= 1.2"
+  }
+}
+
 resource "local_file" "literature" {
   content = <<EOF
 Sun Tzu said: The art of war is of vital importance to the State.
