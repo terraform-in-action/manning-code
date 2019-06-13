@@ -46,7 +46,8 @@ resource "aws_autoscaling_group" "webserver" {
 }
 
 module "alb" {
-  source                   = "scottwinkler/alb/aws"
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 4.0"
   load_balancer_name       = "${var.namespace}-alb"
   security_groups          = [var.sg.lb]
   subnets                  = var.vpc.public_subnets

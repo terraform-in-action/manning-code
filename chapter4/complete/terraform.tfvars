@@ -1,3 +1,2 @@
-namespace  = "my-cool-project"
-ssh_keypair = "swinkler"
-aws_region = "us-west-2"
+namespace = "my-cool-project"
+region = "us-west-2"
