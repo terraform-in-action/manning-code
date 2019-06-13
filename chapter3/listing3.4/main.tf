@@ -1,8 +1,8 @@
 terraform {
-  required_version = ">= 0.12.0"
+  required_version = "~> 0.12"
   required_providers {
-    random = ">= 2.1"
-    template = ">= 2.1"
+    random = "~> 2.1"
+    template = "~> 2.1"
   }
 }
 
@@ -40,7 +40,7 @@ resource "random_shuffle" "random_numbers" {
 
 
 data "template_file" "madlib" {
-  template = file("./alice.tpl")
+  template = file("./alice.txt")
   vars = {
     ADJECTIVE0 = random_shuffle.random_adjectives.result[0]
     ADJECTIVE1 = random_shuffle.random_adjectives.result[1]

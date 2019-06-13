@@ -1,3 +1,11 @@
+terraform {
+  required_version = "~> 0.12"
+  required_providers {
+    random = "~> 2.1"
+    template = "~> 2.1"
+  }
+}
+
 variable "words" {
     default = {
         nouns = ["army", "panther", "walnuts", "sandwich", "Zeus", "banana", "cat", "jellyfish", "jigsaw", "violin", "milk", "sun"]
@@ -46,7 +54,7 @@ resource "random_shuffle" "random_numbers" {
 
 resource "local_file" "mad_lib" {
   count = var.num_files
-  content = templatefile("alice.tpl",
+  content = templatefile("alice.txt",
     {
         nouns=random_shuffle.random_nouns[count.index].result
         adjectives=random_shuffle.random_adjectives[count.index].result

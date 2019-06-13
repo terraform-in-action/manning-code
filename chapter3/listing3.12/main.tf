@@ -1,3 +1,11 @@
+terraform {
+  required_version = "~> 0.12"
+  required_providers {
+    random = "~> 2.1"
+    template = "~> 2.1"
+  }
+}
+
 variable "words" {
     default = {
         nouns = ["army", "panther", "walnuts", "sandwich", "Zeus", "banana", "cat", "jellyfish", "jigsaw", "violin", "milk", "sun"]
@@ -45,7 +53,7 @@ resource "random_shuffle" "random_numbers" {
 }
 
 variable "templates" {
-    default = ["templates/alice.tpl","templates/observatory.tpl","templates/photographer.tpl"]
+    default = ["templates/alice.txt","templates/observatory.txt","templates/photographer.txt"]
     type = list(string)
 }
 

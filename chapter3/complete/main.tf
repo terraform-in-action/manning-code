@@ -1,3 +1,12 @@
+terraform {
+  required_version = "~> 0.12"
+  required_providers {
+    random = "~> 2.1"
+    template = "~> 2.1"
+    local = "~> 1.2"
+  }
+}
+
 variable "words" {
     default = {
         nouns = ["army", "panther", "walnuts", "sandwich", "Zeus", "banana", "cat", "jellyfish", "jigsaw", "violin", "milk", "sun"]
@@ -44,9 +53,14 @@ resource "random_shuffle" "random_numbers" {
   input = var.words["numbers"]
 }
 
+}variable "templates" {
+    default = ["templates/alice.txt","templates/observatory.txt","templates/photographer.txt"]
+    type = list(string)
+}
+
 resource "local_file" "mad_lib" {
   count = var.num_files
-  content = templatefile("alice.tpl",
+  content = templatefile(element(var.templates,count.index),
     {
         nouns=random_shuffle.random_nouns[count.index].result
         adjectives=random_shuffle.random_adjectives[count.index].result
@@ -58,7 +72,7 @@ resource "local_file" "mad_lib" {
 }
 
 data "archive_file" "mad_libs" {
-  depends_on = [local_file.mad_lib]
+  depends_on = ["local_file.mad_lib"]
   type        = "zip"
   output_path = "madlibs.zip"
   source_dir = "./madlibs"
