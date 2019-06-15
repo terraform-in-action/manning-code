@@ -3,9 +3,8 @@ data "google_project" "project" {}
 
 locals {
   services = ["cloudbuild.googleapis.com","run.googleapis.com","iam.googleapis.com"]
-  image = "gcr.io/${local.project_id}/${var.namespace}"
-  roles = ["roles/run.admin","roles/iam.serviceAccountUser"]
   project_id = data.google_project.project.id
+  image = "gcr.io/${local.project_id}/${var.namespace}"
   steps = [
     {
       name = "gcr.io/cloud-builders/go"
@@ -30,6 +29,7 @@ locals {
       args = ["beta","run","deploy",google_cloudrun_service.service.name,"--image",local.image,"--region",local.region]
     }
   ]
+  roles = ["roles/run.admin","roles/iam.serviceAccountUser"]
 }
 
 resource "google_project_service" "enabled_service" {
@@ -92,3 +92,8 @@ resource "null_resource" "cloudrun_allow" {
         command = "gcloud beta run services set-iam-policy ${google_cloudrun_service.service.name} --region us-central1 policy.yaml -q"
     }
 }
+/*
+resource "google_cloudrun_domain_mapping" {
+  location = local.region
+}*/
+//(optional add domain_mapping)
