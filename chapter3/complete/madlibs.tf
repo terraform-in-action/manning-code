@@ -4,6 +4,7 @@ terraform {
     random = "~> 2.1"
     template = "~> 2.1"
     local = "~> 1.2"
+    archive = "~> 2.1"
   }
 }
 
