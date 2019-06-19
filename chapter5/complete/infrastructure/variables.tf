@@ -3,13 +3,19 @@ variable "project_id" {
     type = string
 }
 
+variable "region" {
+    default = "us-central1"
+    description = "GCP region"
+    type = string
+}
+
 variable "namespace" {
     description = "The project namespace to use for unique resource naming"
     type = string
 }
 
-variable "gcp_region" {
-    default = "us-central1"
-    description = "GCP region"
+variable "domain_name" {
+    default = null
+    description = "A validated domain name to use for the app"
     type = string
 }

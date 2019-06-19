@@ -1,7 +1,7 @@
 terraform {
   required_version = "~> 0.12"
   required_providers {
-    local = "~> 2.1"
+    local = "~> 1.2"
   }
 }
 

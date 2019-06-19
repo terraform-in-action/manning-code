@@ -3,7 +3,7 @@ terraform {
   required_providers {
     random = "~> 2.1"
     template = "~> 2.1"
-    local = "~> 2.1"
+    local = "~> 1.2"
   }
 }
 

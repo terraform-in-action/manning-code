@@ -9,3 +9,6 @@
 crash.log
 terraform
 .DS_Store
+
+account.json
+.vscode

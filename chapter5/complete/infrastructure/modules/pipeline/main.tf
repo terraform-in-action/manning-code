@@ -1,39 +1,40 @@
 #divide code into /terraform and /client
-data "google_project" "project" {}
+data "google_client_config" "current" {}
 
 locals {
-  services = ["cloudbuild.googleapis.com","run.googleapis.com","iam.googleapis.com"]
-  project_id = data.google_project.project.id
-  image = "gcr.io/${local.project_id}/${var.namespace}"
+  services   = ["sourcerepo.googleapis.com","cloudbuild.googleapis.com", "run.googleapis.com", "iam.googleapis.com"]
+  project_id = data.google_client_config.current.project
+  region     = data.google_client_config.current.region
+  image      = "gcr.io/${local.project_id}/${var.namespace}"
   steps = [
     {
       name = "gcr.io/cloud-builders/go"
-      args = ["install","."]
-      env = ["PROJECT_ROOT=${var.namespace}"]
+      args = ["install", "."]
+      env  = ["PROJECT_ROOT=${var.namespace}"]
     },
     {
       name = "gcr.io/cloud-builders/go"
       args = ["test"]
-      env = ["PROJECT_ROOT=${var.namespace}"]
+      env  = ["PROJECT_ROOT=${var.namespace}"]
     },
     {
       name = "gcr.io/cloud-builders/docker"
-      args = ["build","-t",local.image,"."]
+      args = ["build", "-t", local.image, "."]
     },
     {
       name = "gcr.io/cloud-builders/docker"
-      args = ["push",local.image]
+      args = ["push", local.image]
     },
     {
       name = "gcr.io/cloud-builders/gcloud"
-      args = ["beta","run","deploy",google_cloudrun_service.service.name,"--image",local.image,"--region",local.region]
+      args = ["beta", "run", "deploy", google_cloudrun_service.service.name, "--image", local.image, "--region", local.region]
     }
   ]
-  roles = ["roles/run.admin","roles/iam.serviceAccountUser"]
+  roles = ["roles/run.admin", "roles/iam.serviceAccountUser"]
 }
 
 resource "google_project_service" "enabled_service" {
-  count = length(local.services)
+  count   = length(local.services)
   project = local.project_id
   service = local.services[count.index]
   provisioner "local-exec" {
@@ -43,7 +44,7 @@ resource "google_project_service" "enabled_service" {
 
 resource "google_sourcerepo_repository" "repo" {
   depends_on = [google_project_service.enabled_service]
-  name = "${var.namespace}-repo"
+  name       = "${var.namespace}-repo"
 }
 
 resource "google_cloudbuild_trigger" "trigger" {
@@ -53,47 +54,44 @@ resource "google_cloudbuild_trigger" "trigger" {
   }
 
   build {
-    dynamic "step"{
+    dynamic "step" {
       for_each = local.steps
       content {
         name = step.value.name
         args = step.value.args
-        env = lookup(step.value,"env",null)
+        env  = lookup(step.value, "env", null)
       }
     }
   }
 }
 
+data "google_project" "project" {}
+
 resource "google_project_iam_member" "cloudbuild_roles" {
   depends_on = [google_cloudbuild_trigger.trigger]
-  count = length(local.roles)
-  project = local.project_id
-  role    = local.roles[count.index]
-  member  = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
+  count      = length(local.roles)
+  project    = local.project_id
+  role       = local.roles[count.index]
+  member     = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
 }
 
 resource "google_cloudrun_service" "service" {
-    depends_on = [google_project_service.enabled_service]
-    provider = "google-beta"
-    location = local.region
-    name = "${var.namespace}-service"
-    metadata {
-        namespace = local.project_id
+  depends_on = [google_project_service.enabled_service]
+  provider   = "google-beta"
+  location   = local.region
+  name       = "${var.namespace}-service"
+  metadata {
+    namespace = local.project_id
+  }
+  spec {
+    container {
+      image = "${local.image}:latest"
     }
-    spec  {
-        container  {
-            image = "${local.image}:latest"       
-        }
-    }
+  }
 }
 
 resource "null_resource" "cloudrun_allow" {
-    provisioner "local-exec" {
-        command = "gcloud beta run services set-iam-policy ${google_cloudrun_service.service.name} --region us-central1 policy.yaml -q"
-    }
+  provisioner "local-exec" {
+    command = "cd ${path.module} && gcloud beta run services set-iam-policy ${google_cloudrun_service.service.name} --region us-central1 policy.yaml -q --project ${local.project_id}"
+  }
 }
-/*
-resource "google_cloudrun_domain_mapping" {
-  location = local.region
-}*/
-//(optional add domain_mapping)
