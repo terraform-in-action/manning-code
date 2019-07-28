@@ -54,7 +54,7 @@ resource "random_shuffle" "random_numbers" {
 
 resource "local_file" "mad_lib" {
   count = var.num_files
-  content = templatefile("madlibs.txt",
+  content = templatefile("alice.txt",
     {
         nouns=random_shuffle.random_nouns[count.index].result
         adjectives=random_shuffle.random_adjectives[count.index].result
