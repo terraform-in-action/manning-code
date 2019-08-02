@@ -28,6 +28,19 @@ resource "azurerm_storage_container" "storage_container" {
   container_access_type = "private"
 }
 
+module "ballroom" {
+  source = "scottwinkler/ballroom/azure"
+}
+
+resource "azurerm_storage_blob" "storage_blob" {
+  name                   = "server.zip"
+  resource_group_name    = azurerm_resource_group.default.name
+  storage_account_name   = azurerm_storage_account.storage_account.name
+  storage_container_name = azurerm_storage_container.storage_container.name
+  type                   = "block"
+  source                 = module.ballroom.output_path
+}
+
 data "azurerm_storage_account_sas" "storage_sas" {
   connection_string = azurerm_storage_account.storage_account.primary_connection_string
 
@@ -59,20 +72,9 @@ data "azurerm_storage_account_sas" "storage_sas" {
   }
 }
 
-module "ballroom" {
-  source = "scottwinkler/ballroom/azure"
-  # version = "0.1.1"
+locals {
+  package_url = replace("https://${azurerm_storage_account.storage_account.name}.blob.core.windows.net/${azurerm_storage_container.storage_container.name}/${azurerm_storage_blob.storage_blob.name}${data.azurerm_storage_account_sas.storage_sas.sas}", "%3d", "=")
 }
-
-resource "azurerm_storage_blob" "storage_blob" {
-  name                   = "server.zip"
-  resource_group_name    = azurerm_resource_group.default.name
-  storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = azurerm_storage_container.storage_container.name
-  type                   = "block"
-  source                 = module.ballroom.output_path
-}
-
 
 resource "azurerm_app_service_plan" "plan" {
   name                = local.namespace
@@ -90,10 +92,6 @@ resource "azurerm_application_insights" "application_insights" {
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name
   application_type    = "Web"
-}
-
-locals {
-  package_url = replace("https://${azurerm_storage_account.storage_account.name}.blob.core.windows.net/${azurerm_storage_container.storage_container.name}/${azurerm_storage_blob.storage_blob.name}${data.azurerm_storage_account_sas.storage_sas.sas}", "%3d", "=")
 }
 
 resource "azurerm_function_app" "function" {

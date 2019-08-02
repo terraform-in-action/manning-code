@@ -9,5 +9,5 @@ variable "region" {
 
 variable "namespace" {
   type    = string
-  default = "terraforminaction"
+  default = "ballroominaction"
 }
