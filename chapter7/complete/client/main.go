@@ -13,5 +13,5 @@ func IndexServer(w http.ResponseWriter, r *http.Request) {
 func main() {
 	handler := http.HandlerFunc(IndexServer)
 	log.Println("Listening on :8080...")
-	http.ListenAndServe(":8080", handler)
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
