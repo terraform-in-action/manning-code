@@ -13,9 +13,3 @@ variable "namespace" {
     description = "The project namespace to use for unique resource naming"
     type = string
 }
-
-variable "domain_name" {
-    default = null
-    description = "A validated domain name to use for the app"
-    type = string
-}

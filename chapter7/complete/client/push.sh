@@ -1,7 +1,4 @@
-git init
-git add -A
-git commit -m "init"
+git init && git add -A && git commit -m "initial push"
 git config --global credential.https://source.developers.google.com.helper gcloud.sh
-git remote add google https://source.developers.google.com/p/terraform-in-action2/r/chapter5-repo
-gcloud auth login
-git push --all google
+git remote add google $1
+gcloud auth login && git push --all google

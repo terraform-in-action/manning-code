@@ -1,3 +1,3 @@
-project_id="terraform-in-action2"
-namespace = "my-cool-project"
+project_id="???"
 region = "us-central1"
+namespace = "team-pokemon"
