@@ -1,15 +1,23 @@
-data "google_project" "project" {}
-
 locals {
-  services = ["cloudbuild.googleapis.com","run.googleapis.com","iam.googleapis.com"]
-  project_id = data.google_project.project.id
+  services = [
+    "sourcerepo.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "run.googleapis.com",
+    "iam.googleapis.com",
+  ]
 }
 
 resource "google_project_service" "enabled_service" {
-  count = length(local.services)
-  project = local.project_id
-  service = local.services[count.index]
+  for_each = toset(local.services)
+  project  = var.project_id
+  service  = each.key
+
   provisioner "local-exec" {
     command = "sleep 60"
+  }
+
+  provisioner "local-exec" {
+    when    = "destroy"
+    command = "sleep 15"
   }
 }

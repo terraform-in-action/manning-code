@@ -11,11 +11,3 @@ module "s3backend" {
 output "s3backend_config" {
   value = module.s3backend.config
 }
-
-/*
-module "github_test" {
-    source ="github.com/scottwinkler/terraform-aws-s3backend"
-    
-    account_id = "215974853022"
-    force_destroy = true
-}*/
