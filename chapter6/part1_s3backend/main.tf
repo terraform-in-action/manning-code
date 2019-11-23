@@ -1,7 +1,17 @@
 data "aws_region" "current" {}
 
+resource "random_string" "rand" {
+  length  = 24
+  special = false
+  upper   = false
+}
+
+locals {
+  namespace = substr(join("-", [var.namespace, random_string.rand.result]), 0, 24)
+}
+
 resource "aws_resourcegroups_group" "resourcegroups_group" {
-  name = "${var.namespace}-group"
+  name = "${local.namespace}-group"
 
   resource_query {
     query = <<-JSON
@@ -12,7 +22,7 @@ resource "aws_resourcegroups_group" "resourcegroups_group" {
   "TagFilters": [
     {
       "Key": "ResourceGroup",
-      "Values": ["${var.namespace}"]
+      "Values": ["${local.namespace}"]
     }
   ]
 }
@@ -20,25 +30,20 @@ resource "aws_resourcegroups_group" "resourcegroups_group" {
   }
 }
 
-resource "random_string" "rand" {
-  length  = 8
-  special = false
-  upper   = false
-}
-
 resource "aws_kms_key" "kms_key" {
   tags = {
-    ResourceGroup = var.namespace 
+    ResourceGroup = local.namespace 
   }
 }
 
 resource "aws_s3_bucket" "s3_bucket" {
-  bucket = "${var.namespace}-state-bucket-${random_string.rand.result}"
-
+  bucket = "${local.namespace}-state-bucket"
+  force_destroy = var.force_destroy_state
+  
   versioning {
     enabled = true
   }
-  force_destroy = var.force_destroy_state
+
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -47,13 +52,14 @@ resource "aws_s3_bucket" "s3_bucket" {
       }
     }
   }
+  
   tags = {
-    ResourceGroup = var.namespace 
+    ResourceGroup = local.namespace 
   }
 }
 
 resource "aws_dynamodb_table" "dynamodb_table" {
-  name         = "${var.namespace}-state-lock"
+  name         = "${local.namespace}-state-lock"
   hash_key     = "LockID"
   billing_mode = "PAY_PER_REQUEST"
   attribute {
@@ -61,6 +67,6 @@ resource "aws_dynamodb_table" "dynamodb_table" {
     type = "S"
   }
   tags = {
-    ResourceGroup = var.namespace 
+    ResourceGroup = local.namespace 
   }
 }
