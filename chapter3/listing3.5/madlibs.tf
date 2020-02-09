@@ -40,7 +40,7 @@ resource "random_shuffle" "random_numbers" {
 
 
 data "template_file" "madlib" {
-  template = file("./madlibs.txt")
+  template = file("./alice.txt")
   vars = {
     ADJECTIVE0 = random_shuffle.random_adjectives.result[0]
     ADJECTIVE1 = random_shuffle.random_adjectives.result[1]
@@ -65,5 +65,5 @@ data "template_file" "madlib" {
 
 resource "local_file" "mad_lib" {
     content     = data.template_file.madlib.rendered
-    filename = "alice.txt"
+    filename = "madlibs.txt"
 }
