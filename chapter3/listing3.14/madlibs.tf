@@ -53,7 +53,7 @@ resource "random_shuffle" "random_numbers" {
   input = var.words["numbers"]
 }
 
-}variable "templates" {
+variable "templates" {
     default = ["templates/alice.txt","templates/observatory.txt","templates/photographer.txt"]
     type = list(string)
 }
