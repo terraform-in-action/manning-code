@@ -1,0 +1,14 @@
+THE OBSERVATORY
+ 
+Out class when on a field trip to a ${adjectives[0]} observatory.
+It was located on top of a ${nouns[0]}, and it looked like a giant
+${nouns[1]} with a slit down its ${nouns[2]}. We went inside
+and looked through a ${nouns[3]} and were able to see
+${nouns[4]}s in the sky that were millions of ${nouns[5]}s
+away. The men and women who ${verbs[0]} in the observatory
+are called ${nouns[6]}s, and they are always watching for
+comets, eclipses, and shooting ${nouns[7]}s. An eclipse occurs
+when a ${nouns[8]} comes between the earth and the ${nouns[9]}
+and everything gets ${adjectives[1]}. Next week, we place to
+${verbs[1]} the Museum of Modern ${nouns[10]}.
+
