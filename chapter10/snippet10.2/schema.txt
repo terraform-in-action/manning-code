@@ -1,0 +1,2 @@
+$ terraform providers schema
+{"format_version":"0.1","provider_schemas":{"petstore":{"provider":{"version":0,"block":{"attributes":{"address":{"type":"string","optional":true}}}},"resource_schemas":{"petstore_pet":{"version":0,"block":{"attributes":{"age":{"type":"number","required":true},"id":{"type":"string","optional":true,"computed":true},"name":{"type":"string","required":true},"species":{"type":"string","required":true}}}}}}}} 
