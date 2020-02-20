@@ -4,7 +4,7 @@ resource "null_resource" "cowsay" {
   }
 
   provisioner "local-exec" {
-    when = destroy
+    when    = destroy
     command = "cowsay -d Goodbye cruel world!"
   }
 }

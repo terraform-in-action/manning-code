@@ -33,7 +33,7 @@ module "websvr_sg" {
       security_groups = [module.lb_sg.security_group.id]
     },
     {
-      port       = 22
+      port        = 22
       cidr_blocks = ["10.0.0.0/16"]
     }
   ]

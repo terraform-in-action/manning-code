@@ -7,5 +7,5 @@ EOF
 }
 
 output "user" {
-    value = data.shell_script.user.output["user"]
+  value = data.shell_script.user.output["user"]
 }

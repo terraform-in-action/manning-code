@@ -4,8 +4,8 @@ provider "aws" {
 }
 
 module "s3backend" {
-  source = "scottwinkler/s3backend/aws"
-  namespace     = "pokemon"
+  source    = "scottwinkler/s3backend/aws"
+  namespace = "pokemon"
 }
 
 output "s3backend_config" {

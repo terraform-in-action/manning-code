@@ -7,12 +7,12 @@ variable "policy" {
 }
 
 resource "aws_iam_user" "svc_account" {
-  name = var.name
+  name          = var.name
   force_destroy = true
 }
 
 resource "aws_iam_user_policy" "svc_account" {
-  user = aws_iam_user.svc_account.name
+  user   = aws_iam_user.svc_account.name
   policy = var.policy
 }
 

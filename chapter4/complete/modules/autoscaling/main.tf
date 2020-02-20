@@ -26,7 +26,7 @@ resource "aws_launch_template" "webserver" {
   image_id      = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   user_data     = data.template_cloudinit_config.config.rendered
-  key_name            = var.ssh_keypair
+  key_name      = var.ssh_keypair
   iam_instance_profile {
     name = module.iam_instance_profile.name
   }
@@ -40,14 +40,14 @@ resource "aws_autoscaling_group" "webserver" {
   vpc_zone_identifier = var.vpc.private_subnets
   target_group_arns   = module.alb.target_group_arns
   launch_template {
-    id = aws_launch_template.webserver.id
+    id      = aws_launch_template.webserver.id
     version = aws_launch_template.webserver.latest_version
   }
 }
 
 module "alb" {
-  source  = "terraform-aws-modules/alb/aws"
-  version = "~> 4.0"
+  source                   = "terraform-aws-modules/alb/aws"
+  version                  = "~> 4.0"
   load_balancer_name       = "${var.namespace}-alb"
   security_groups          = [var.sg.lb]
   subnets                  = var.vpc.public_subnets
