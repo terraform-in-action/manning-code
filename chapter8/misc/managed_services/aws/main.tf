@@ -51,7 +51,7 @@ resource "aws_lb" "lb" {
 }
 
 resource "aws_lb_target_group" "lb_target_group" {
-  depends_on = [aws_lb.lb]
+  depends_on  = [aws_lb.lb]
   name        = "${local.namespace}-group"
   port        = var.app.port
   protocol    = "HTTP"
@@ -140,15 +140,15 @@ resource "aws_iam_policy_attachment" "task_iam_policy_role_attachment" {
 }
 
 resource "aws_ecs_task_definition" "ecs_task_definition" {
-  depends_on = [aws_iam_policy_attachment.task_iam_policy_role_attachment]
+  depends_on               = [aws_iam_policy_attachment.task_iam_policy_role_attachment]
   family                   = "${local.namespace}-app"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 256
   memory                   = 512
-  execution_role_arn = aws_iam_role.task_role.arn
+  execution_role_arn       = aws_iam_role.task_role.arn
   task_role_arn            = aws_iam_role.task_role.arn
-  container_definitions = <<DEFINITION
+  container_definitions    = <<DEFINITION
 [
   {
     "cpu": 256,

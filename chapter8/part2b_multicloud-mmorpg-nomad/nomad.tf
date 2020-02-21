@@ -1,7 +1,7 @@
 terraform {
   required_version = "~> 0.12"
   required_providers {
-    nomad     = "~> 1.4"
+    nomad = "~> 1.4"
   }
 }
 

@@ -23,7 +23,7 @@ resource "aws_iam_role" "iam_role" {
   EOF
 
   tags = {
-    ResourceGroup = local.namespace 
+    ResourceGroup = local.namespace
   }
 }
 
@@ -57,12 +57,12 @@ data "aws_iam_policy_document" "policy_doc" {
 }
 
 resource "aws_iam_policy" "iam_policy" {
-  name = "${local.namespace}-tf-policy"
-  path = "/"
+  name   = "${local.namespace}-tf-policy"
+  path   = "/"
   policy = data.aws_iam_policy_document.policy_doc.json
 }
 
 resource "aws_iam_role_policy_attachment" "policy_attach" {
-  role = aws_iam_role.iam_role.name
+  role       = aws_iam_role.iam_role.name
   policy_arn = aws_iam_policy.iam_policy.arn
 }

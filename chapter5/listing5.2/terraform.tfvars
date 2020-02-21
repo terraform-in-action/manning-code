@@ -1,3 +1,3 @@
-client_secret="XXXX"
-region="westus2"
-namespace="ballroominaction"
+client_secret = "XXXX"
+region        = "westus2"
+namespace     = "ballroominaction"

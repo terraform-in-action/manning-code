@@ -1,3 +1,3 @@
 provider "petstore" {
-    address = var.address
+  address = var.address
 }

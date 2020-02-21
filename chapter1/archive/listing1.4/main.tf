@@ -1,5 +1,5 @@
 provider "aws" {
-    region = "us-west-2"
+  region = "us-west-2"
 }
 
 module "webserver" {
@@ -10,5 +10,5 @@ module "webserver" {
 }
 
 output "lb_dns_name" {
-    value = module.webserver.lb_dns_name
+  value = module.webserver.lb_dns_name
 }

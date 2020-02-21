@@ -1,10 +1,10 @@
 resource "aws_iam_user" "app1" {
-  name = "app1-service-account"
+  name          = "app1-service-account"
   force_destroy = true
 }
 
 resource "aws_iam_user_policy" "app1" {
-  user = aws_iam_user.app1.name
+  user   = aws_iam_user.app1.name
   policy = <<-EOF
     {
       "Version": "2012-10-17",

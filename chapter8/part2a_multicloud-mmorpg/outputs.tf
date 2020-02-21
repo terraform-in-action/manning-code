@@ -1,7 +1,7 @@
 output "aws" {
-    value = module.aws
+  value = module.aws
 }
 
 output "azure" {
-    value = module.azure
+  value = module.azure
 }
