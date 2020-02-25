@@ -6,7 +6,7 @@ terraform {
 }
 
 resource "local_file" "literature" {
-    content     = <<-EOT
+  content = <<-EOT
       Sun Tzu said: The art of war is of vital importance to the State.
 
       It is a matter of life and death, a road either to safety or to 
@@ -21,5 +21,5 @@ resource "local_file" "literature" {
       Commander; (5) Method and discipline.
     EOT
 
-    filename = "art_of_war.txt"
+  filename = "art_of_war.txt"
 }

@@ -1,9 +1,9 @@
 variable "namespace" {
-    default = ""
-    type = string
+  default = ""
+  type    = string
 }
 
 variable "location" {
-    default = "uswest"
-    type = string
+  default = "uswest"
+  type    = string
 }

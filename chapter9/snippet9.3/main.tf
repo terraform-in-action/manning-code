@@ -14,6 +14,6 @@ resource "aws_instance" "instance" {
   EOF
 
   provisioner "local-exec" {
-    command = "./health-check.sh ${self.public_ip}" 
+    command = "./health-check.sh ${self.public_ip}"
   }
 }

@@ -1,3 +1,3 @@
 output "website_url" {
-    value = "https://${local.namespace}.azurewebsites.net/"
+  value = "https://${local.namespace}.azurewebsites.net/"
 }

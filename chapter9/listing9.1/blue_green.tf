@@ -8,8 +8,8 @@ variable "live" {
 }
 
 module "base" {
-  source     = "./modules/base"
-  live    = var.live
+  source = "./modules/base"
+  live   = var.live
 }
 
 module "green" {

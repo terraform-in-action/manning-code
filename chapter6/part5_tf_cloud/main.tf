@@ -1,8 +1,8 @@
 terraform {
   backend "remote" {
-    hostname = "app.terraform.io"
+    hostname     = "app.terraform.io"
     organization = "fightclub"
-    token = "xxx"
+    token        = "xxx"
     workspaces {
       name = "my-app-dev"
     }
