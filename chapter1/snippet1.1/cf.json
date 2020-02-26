@@ -1,6 +1,6 @@
 {
     "Resources": {
-        "Example": {
+        "helloworld": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-944162ec",
