@@ -1,8 +1,3 @@
-resource "azurerm_resource_group" "default" {
-  name     = var.namespace
-  location = var.region
-}
-
 resource "random_string" "rand" {
   length  = 24
   special = false
@@ -11,6 +6,11 @@ resource "random_string" "rand" {
 
 locals {
   namespace = substr(join("-", [var.namespace, random_string.rand.result]), 0, 24)
+}
+
+resource "azurerm_resource_group" "default" {
+  name     = local.namespace
+  location = var.region
 }
 
 resource "azurerm_storage_account" "storage_account" {

@@ -1,4 +1,4 @@
 resource "azurerm_resource_group" "default" {
-  name     = var.namespace
+  name     = local.namespace
   location = var.region
 }
