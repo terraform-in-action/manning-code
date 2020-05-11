@@ -1,0 +1,14 @@
+{
+  "terraform": {
+    "backend": {
+      "s3": {
+        "bucket": "${config.bucket}",
+        "key": "aws/${name}",
+        "region": "${config.region}",
+        "encrypt": true,
+        "role_arn": "${config.role_arn}",
+        "dynamodb_table": "${config.dynamodb_table}"
+      }
+    }
+  }
+}
