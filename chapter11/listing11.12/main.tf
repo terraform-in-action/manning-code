@@ -35,7 +35,6 @@ locals {
   default_environment = {
     TF_IN_AUTOMATION  = "1"
     TF_INPUT          = "1"
-    CONFIRM_DESTROY   = "0"
     WORKING_DIRECTORY = var.working_directory
     BACKEND           = local.backend,
   }
@@ -102,10 +101,10 @@ resource "aws_codepipeline" "codepipeline" {
   dynamic "stage" {
     for_each = ! var.auto_apply ? [1] : []
     content {
-      name = "Approve"
+      name = "Approval"
 
       action {
-        name     = "Approve"
+        name     = "Approval"
         category = "Approval"
         owner    = "AWS"
         provider = "Manual"

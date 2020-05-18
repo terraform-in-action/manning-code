@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  build:
+    commands:
+       - cd $WORKING_DIRECTORY
+       - echo $BACKEND >> backend.tf.json
+       - terraform init 
+       - |
+         if [[ "$CONFIRM_DESTROY" == "0" ]]; then
+           terraform plan
+         else
+           terraform plan -destroy
+         fi
