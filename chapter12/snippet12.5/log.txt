@@ -1,0 +1,9 @@
+$ terraform apply -auto-approve
+null_resource.uh_oh: Creating...
+null_resource.uh_oh: Provisioning with 'local-exec'...
+null_resource.uh_oh (local-exec): Executing: ["/bin/sh" "-c" "echo \"access_key=$AWS_ACCESS_KEY_ID\"\necho \"secret_key=$AWS_SECRET_ACCESS_KEY\"\n"]
+null_resource.uh_oh (local-exec): access_key=ASIAQHUM6YXTDSEUEMUJ #A
+null_resource.uh_oh (local-exec): secret_key=ILjkhTbflyPdxkvWJl9NV8qZXPJ+yVM3JSq3Uaz1 #B
+null_resource.uh_oh: Creation complete after 0s [id=5973892021553480485]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.

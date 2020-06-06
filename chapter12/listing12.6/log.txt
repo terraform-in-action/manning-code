@@ -1,0 +1,33 @@
+Trying to get account information via sts:GetCallerIdentity
+[aws-sdk-go] DEBUG: Request sts/GetCallerIdentity Details:
+---[ REQUEST POST-SIGN ]-----------------------------
+POST / HTTP/1.1
+Host: sts.amazonaws.com
+User-Agent: aws-sdk-go/1.30.16 (go1.13.7; darwin; amd64) APN/1.0 HashiCorp/1.0 Terraform/0.12.24 (+https://www.terraform.io)
+Content-Length: 43
+Authorization: AWS4-HMAC-SHA256 Credential=AKIATESI2XGPMMVVB7XL/20200504/us-east-1/sts/aws4_request, SignedHeaders=content-length;content-type;host;x-amz-date, Signature=c4df301a200eb46d278ce1b6b9ead1cfbe64f045caf9934a14e9b7f8c207c3f8
+#A
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+X-Amz-Date: 20200504T084221Z
+Accept-Encoding: gzip
+Action=GetCallerIdentity&Version=2011-06-15
+-----------------------------------------------------
+[aws-sdk-go] DEBUG: Response sts/GetCallerIdentity Details:
+---[ RESPONSE ]--------------------------------------
+HTTP/1.1 200 OK
+Connection: close
+Content-Length: 405
+Content-Type: text/xml
+Date: Mon, 04 May 2020 07:37:21 GMT
+X-Amzn-Requestid: 74b2886b-43bc-475c-bda3-846123059142
+-----------------------------------------------------
+[aws-sdk-go] <GetCallerIdentityResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+  <GetCallerIdentityResult>
+    <Arn>arn:aws:iam::215974853022:user/swinkler</Arn> #B
+    <UserId>AIDAJKZ3K7CTQHZ5F4F52</UserId> #B
+    <Account>215974853022</Account> #B
+  </GetCallerIdentityResult>
+  <ResponseMetadata>
+    <RequestId>74b2886b-43bc-475c-bda3-846123059142</RequestId>
+  </ResponseMetadata>
+</GetCallerIdentityResponse>
