@@ -1,7 +1,3 @@
-terraform {
-  required_version = "~> 0.13"
-}
-
 variable "words" {
   description = "A word pool to use for Mad Libs"
   type = object({
@@ -11,4 +7,9 @@ variable "words" {
     adverbs    = list(string),
     numbers    = list(number),
   })
+
+  validation {
+    condition     = length(var.words["nouns"]) >= 11
+    error_message = "At least 11 noun must be supplied"
+  }
 }

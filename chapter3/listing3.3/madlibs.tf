@@ -1,20 +1,19 @@
 terraform {
-  required_version = "~> 0.12"
+  required_version = "~> 0.13"
   required_providers {
-    random = "~> 2.1"
+    random = "~> 2.2"
   }
 }
 
 variable "words" {
-  default = {
-    nouns      = ["army", "panther", "walnuts", "sandwich", "Zeus", "banana", "cat", "jellyfish", "jigsaw", "violin", "milk", "sun"]
-    adjectives = ["bitter", "sticky", "thundering", "abundant", "chubby", "grumpy"]
-    verbs      = ["run", "dance", "love", "respect", "kicked", "baked"]
-    adverbs    = ["delicately", "beautifully", "quickly", "truthfully", "wearily"]
-    numbers    = [42, 27, 101, 73, -5, 0]
-  }
   description = "A word pool to use for Mad Libs"
-  type        = map(list(string))
+  type = object({
+    nouns      = list(string),
+    adjectives = list(string),
+    verbs      = list(string),
+    adverbs    = list(string),
+    numbers    = list(number),
+  })
 }
 
 resource "random_shuffle" "random_nouns" {
