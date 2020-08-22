@@ -1,23 +1,7 @@
-module "app1" {
-  source = "./modules/iam"
-  name   = "app1-service-account"
-  policy = file("./policies/app1.json")
+output "public_ip" {
+ value = aws_instance.ansible_server.public_ip
 }
 
-module "app2" {
-  source = "./modules/iam"
-  name   = "app2-service-account"
-  policy = file("./policies/app2.json")
-}
-
-locals {
-  credentials = [
-    module.app1.credentials,
-    module.app2.credentials,
-  ]
-}
-
-resource "local_file" "credentials" {
-  filename = "credentials"
-  content  = join("\n", local.credentials)
+output "ansible_command" {
+    value = "ansible-playbook -u ubuntu --key-file ansible-key.pem -T 300 -i '${aws_instance.ansible_server.public_ip},', app.yml"
 }

@@ -1,12 +1,28 @@
-resource "local_file" "credentials" {
-  filename = "credentials"
-  content  = <<-EOF
-    [${aws_iam_user.app1.name}]
-    aws_access_key_id = ${aws_iam_access_key.app1.id}
-    aws_secret_access_key = ${aws_iam_access_key.app1.secret}
-    
-    [${aws_iam_user.app2.name}]
-    aws_access_key_id = ${aws_iam_access_key.app2.id}
-    aws_secret_access_key = ${aws_iam_access_key.app2.secret}
-  EOF
+data "aws_vpc" "default" {
+  default = true
+}
+
+resource "aws_security_group" "allow_ssh" {
+  vpc_id = data.aws_vpc.default.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
