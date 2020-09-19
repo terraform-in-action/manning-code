@@ -1,0 +1,7 @@
+$ terraform apply -auto-approve
+aws_instance.helloworld: Creating...
+aws_instance.helloworld: Still creating... [10s elapsed]
+aws_instance.helloworld: Still creating... [20s elapsed]
+aws_instance.helloworld: Creation complete after 24s [id=i-002030c2b40edd6bb]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.

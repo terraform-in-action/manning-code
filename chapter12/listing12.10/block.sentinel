@@ -1,0 +1,22 @@
+import "tfconfig/v2" as tfconfig
+
+keywordInProvisioners = func(s){
+	bad_provisioners = filter tfconfig.provisioners as _, p {
+		p.type is "local-exec" and
+		p.config.command["constant_value"] matches s
+	}
+	return length(bad_provisioners) > 0
+}
+
+no_access_keys = rule {
+	not keywordInProvisioners("AWS_ACCESS_KEY_ID")
+}
+
+no_secret_keys = rule {
+	not keywordInProvisioners("AWS_SECRET_ACCESS_KEY")
+}
+
+main = rule {
+	no_access_keys and
+	no_secret_keys
+}

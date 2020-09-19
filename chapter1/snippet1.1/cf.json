@@ -1,10 +1,16 @@
 {
     "Resources": {
-        "helloworld": {
+        "Example": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
-                "ImageId": "ami-944162ec",
-                "InstanceType": "t2.micro"
+                "ImageId": "ami-09dd2e08d601bff67",
+                "InstanceType": "t2.micro",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "HelloWorld"
+                    }
+                ]
             }
         }
     }

@@ -1,0 +1,19 @@
+$ curl -L -X POST 'https://sts.amazonaws.com' \
+-H 'Host: sts.amazonaws.com' \
+-H 'Authorization: AWS4-HMAC-SHA256 Credential=AKIATESI2XGPMMVVB7XL/20200504/us-east-1/sts/aws4_request, SignedHeaders=content-length;content-type;host;x-amz-date, Signature=c4df301a200eb46d278ce1b6b9ead1cfbe64f045caf9934a14e9b7f8c207c3f8' \
+-H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+-H 'X-Amz-Date: 20200504T084221Z' \
+-H 'Accept-Encoding: gzip' \
+--data-urlencode 'Action=GetCallerIdentity' \
+--data-urlencode 'Version=2011-06-15'
+
+<GetCallerIdentityResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+  <GetCallerIdentityResult>
+    <Arn>arn:aws:iam::215974853022:user/swinkler</Arn>
+    <UserId>AIDAJKZ3K7CTQHZ5F4F52</UserId>
+    <Account>215974853022</Account>
+  </GetCallerIdentityResult>
+  <ResponseMetadata>
+    <RequestId>e6870ff6-a09e-4479-8860-c3ca08b323b5</RequestId>
+  </ResponseMetadata>
+</GetCallerIdentityResponse>
