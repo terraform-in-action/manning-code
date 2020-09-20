@@ -10,6 +10,6 @@ variable "words" {
 
   validation {
     condition     = length(var.words["nouns"]) >= 11
-    error_message = "At least 11 noun must be supplied"
+    error_message = "At least 11 noun must be supplied."
   }
 }
