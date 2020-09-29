@@ -1,14 +1,13 @@
-provider "vault" {
-  address = var.vault_address
-}
+locals {
+  backend = templatefile("${path.module}/templates/backend.json", { config : var.s3_backend_config, name : local.namespace })
 
-data "vault_aws_access_credentials" "creds" {
-  backend = "aws"
-  role    = "prod-role"
-}
+  default_environment = {
+    TF_IN_AUTOMATION  = "1"
+    TF_INPUT          = "1"
+    CONFIRM_DESTROY   = "0"
+    WORKING_DIRECTORY = var.working_directory
+    BACKEND           = local.backend,
+  }
 
-provider "aws" {
-  access_key = data.vault_aws_access_credentials.creds.access_key
-  secret_key = data.vault_aws_access_credentials.creds.secret_key
-  region     = "us-west-2"
+  environment = jsonencode([for k, v in merge(local.default_environment, var.environment) : { name : k, value : v, type : "PLAINTEXT" }])
 }

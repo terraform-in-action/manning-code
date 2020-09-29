@@ -1,0 +1,1 @@
+join("\n", [for m in module.iam : m.credentials])
