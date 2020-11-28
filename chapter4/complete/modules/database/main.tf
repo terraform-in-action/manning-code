@@ -1,9 +1,7 @@
-resource "random_id" "random_16" {
-  byte_length = 16 * 3 / 4
-}
-
-locals {
-  db_password = random_id.random_16.b64_url
+resource "random_password" "password" { #A
+  length           = 16
+  special          = true
+  override_special = "_%@"
 }
 
 resource "aws_db_instance" "database" {
@@ -14,8 +12,8 @@ resource "aws_db_instance" "database" {
   identifier             = "${var.namespace}-db-instance"
   name                   = "pets"
   username               = "admin"
-  password               = local.db_password
-  db_subnet_group_name   = var.vpc.database_subnet_group
-  vpc_security_group_ids = [var.sg.db]
+  password               = random_password.password.result
+  db_subnet_group_name   = var.vpc.database_subnet_group #B
+  vpc_security_group_ids = [var.sg.db] #B
   skip_final_snapshot    = true
 }

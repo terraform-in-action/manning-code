@@ -1,11 +1,11 @@
 output "vpc" {
-  value = module.vpc #A
+  value = module.vpc
 }
 
 output "sg" {
-  value = { #B
+  value = {
     lb     = module.lb_sg.security_group.id #B
     db     = module.db_sg.security_group.id #B
     websvr = module.websvr_sg.security_group.id #B
-  } #B
+  }
 }
