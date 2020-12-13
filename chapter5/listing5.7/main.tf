@@ -1,5 +1,5 @@
 module "ballroom" {
-  source = "scottwinkler/ballroom/azure"
+  source = " terraform-in-action/ballroom/azure"
 }
 
 resource "azurerm_storage_blob" "storage_blob" {

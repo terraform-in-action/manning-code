@@ -18,7 +18,7 @@ data "azurerm_storage_account_sas" "storage_sas" {
   expiry = "2048-06-19T00:00:00Z"
 
   permissions {
-    read    = true
+    read    = true #A
     write   = false
     delete  = false
     list    = false

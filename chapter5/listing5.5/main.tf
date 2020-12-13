@@ -5,10 +5,5 @@ resource "random_string" "rand" {
 }
 
 locals {
-  namespace = substr(join("-", [var.namespace, random_string.rand.result]), 0, 24)
-}
-
-resource "azurerm_resource_group" "default" {
-  name     = local.namespace
-  location = var.region
+  namespace = substr(join("-", [var.namespace, random_string.rand.result]), 0, 24) #A
 }

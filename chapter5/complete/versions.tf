@@ -1,8 +1,8 @@
 terraform {
-  required_version = "~> 0.12"
+  required_version = "~> 0.14"
   required_providers {
-    archive = "~> 1.2"
-    azurerm = "~> 1.30"
-    random  = "~> 2.1"
+    archive = "~> 1.3"
+    azurerm = "~> 1.44"
+    random  = "~> 2.3"
   }
 }

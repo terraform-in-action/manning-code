@@ -1,8 +1,4 @@
-variable "client_secret" {
-  type = string
-}
-
-variable "region" {
+variable "location" {
   type    = string
   default = "westus2"
 }

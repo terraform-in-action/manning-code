@@ -1,3 +1,2 @@
-client_secret = "XXXX"
-region        = "westus2"
+location      = "westus2"
 namespace     = "ballroominaction"

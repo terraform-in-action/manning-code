@@ -26,10 +26,10 @@ resource "azurerm_function_app" "function" {
   version                   = "~2"
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_RUN_FROM_PACKAGE       = local.package_url
+    WEBSITE_RUN_FROM_PACKAGE       = local.package_url #A
     WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.application_insights.instrumentation_key
-    TABLES_CONNECTION_STRING       = data.azurerm_storage_account_sas.storage_sas.connection_string
+    TABLES_CONNECTION_STRING       = data.azurerm_storage_account_sas.storage_sas.connection_string #B
     AzureWebJobsDisableHomepage    = true
   }
 }
