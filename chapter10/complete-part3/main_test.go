@@ -21,8 +21,9 @@ func TestTerraformModule(t *testing.T) {
 	}
 	defer os.RemoveAll(tmpDir)
 
+	ctx := context.Background()
 	latestVersion := tfinstall.LatestVersion(tmpDir, false)
-	execPath, err := tfinstall.Find(latestVersion)
+	execPath, err := tfinstall.Find(ctx, latestVersion)
 	if err != nil {
 		t.Error(err)
 	}
@@ -33,7 +34,6 @@ func TestTerraformModule(t *testing.T) {
 		t.Error(err)
 	}
 
-	ctx := context.Background()
 	err = tf.Init(ctx, tfexec.Upgrade(true), tfexec.LockTimeout("60s"))
 	if err != nil {
 		t.Error(err)
