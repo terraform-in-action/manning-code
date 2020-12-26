@@ -1,0 +1,51 @@
+{
+  "format_version": "0.1",
+  "provider_schemas": {
+    "registry.terraform.io/terraform-in-action/petstore": {
+      "provider": {
+        "version": 0,
+        "block": {
+          "attributes": {
+            "address": {
+              "type": "string",
+              "description_kind": "plain",
+              "optional": true
+            }
+          },
+          "description_kind": "plain"
+        }
+      },
+      "resource_schemas": {
+        "petstore_pet": {
+          "version": 0,
+          "block": {
+            "attributes": {
+              "age": {
+                "type": "number",
+                "description_kind": "plain",
+                "required": true
+              },
+              "id": {
+                "type": "string",
+                "description_kind": "plain",
+                "optional": true,
+                "computed": true
+              },
+              "name": {
+                "type": "string",
+                "description_kind": "plain",
+                "optional": true
+              },
+              "species": {
+                "type": "string",
+                "description_kind": "plain",
+                "required": true
+              }
+            },
+            "description_kind": "plain"
+          }
+        }
+      }
+    }
+  }
+}

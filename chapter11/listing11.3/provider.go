@@ -3,12 +3,11 @@ package petstore
 import (
 	"net/url"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	sdk "github.com/scottwinkler/go-petstore"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	sdk "github.com/terraform-in-action/go-petstore"
 )
 
-func Provider() terraform.ResourceProvider {
+func Provider() *schema.Provider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"address": &schema.Schema{
@@ -17,8 +16,10 @@ func Provider() terraform.ResourceProvider {
 				DefaultFunc: schema.EnvDefaultFunc("PETSTORE_ADDRESS", nil),
 			},
 		},
+
 		ResourcesMap: map[string]*schema.Resource{
 			"petstore_pet": resourcePSPet(),
 		},
 	}
 }
+

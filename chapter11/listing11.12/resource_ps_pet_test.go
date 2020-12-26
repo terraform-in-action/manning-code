@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	sdk "github.com/scottwinkler/go-petstore"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+	sdk "github.com/terraform-in-action/go-petstore"
 )
 
 func TestAccPSPet_basic(t *testing.T) {
@@ -20,9 +20,9 @@ func TestAccPSPet_basic(t *testing.T) {
 			{
 				Config: testAccPSPetConfig_basic(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "name", "Winston"),
+					resource.TestCheckResourceAttr(resourceName, "name", "Princess"),
 					resource.TestCheckResourceAttr(resourceName, "species", "cat"),
-					resource.TestCheckResourceAttr(resourceName, "age", "2"),
+					resource.TestCheckResourceAttr(resourceName, "age", "3"),
 				),
 			},
 		},
@@ -30,6 +30,7 @@ func TestAccPSPet_basic(t *testing.T) {
 }
 
 func testAccCheckPSPetDestroy(s *terraform.State) error {
+	conn := testAccProvider.Meta().(*sdk.Client)
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "petstore_pet" {
 			continue
@@ -37,10 +38,9 @@ func testAccCheckPSPetDestroy(s *terraform.State) error {
 		if rs.Primary.ID == "" {
 			return fmt.Errorf("No instance ID is set")
 		}
-		conn := testAccProvider.Meta().(*sdk.Client)
-		pet, err := conn.Pets.Read(rs.Primary.ID)
+		_, err := conn.Pets.Read(rs.Primary.ID)
 		if err != sdk.ErrResourceNotFound {
-			return fmt.Errorf("Pet %s still exists", pet.ID)
+			return fmt.Errorf("Pet %s still exists", rs.Primary.ID)
 		}
 	}
 	return nil
@@ -49,9 +49,9 @@ func testAccCheckPSPetDestroy(s *terraform.State) error {
 func testAccPSPetConfig_basic() string {
 	return fmt.Sprintf(`
 	resource "petstore_pet" "pet" {
-		name = "Winston"
+		name    = "Princess"
 		species = "cat"
-		age = 2
+		age     = 3
 	  }
 `)
 }

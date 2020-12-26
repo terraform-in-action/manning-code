@@ -1,8 +1,8 @@
 package petstore
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	sdk "github.com/scottwinkler/go-petstore"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	sdk "github.com/terraform-in-action/go-petstore"
 )
 
 func resourcePSPet() *schema.Resource {
@@ -11,6 +11,9 @@ func resourcePSPet() *schema.Resource {
 		Read:   resourcePSPetRead,
 		Update: resourcePSPetUpdate,
 		Delete: resourcePSPetDelete,
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 
 		Schema: map[string]*schema.Schema{
 			"name": {
@@ -45,6 +48,5 @@ func resourcePSPetCreate(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	d.SetId(pet.ID)
-	resourcePSPetRead(d, meta)
-	return nil #E
+	return resourcePSPetRead(d, meta)
 }
