@@ -12,10 +12,10 @@ module "s3backend" {
 }
 
 module "codepipeline" {
-  source   = "./modules/codepipeline"
-  name     = "terraform-in-action"
-  vcs_repo = var.vcs_repo
-
+  source     = "./modules/codepipeline"
+  name       = "terraform-in-action"
+  vcs_repo   = var.vcs_repo
+  auto_apply = true
   environment = {
     CONFIRM_DESTROY = 1
   }

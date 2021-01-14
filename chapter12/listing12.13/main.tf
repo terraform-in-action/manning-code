@@ -6,13 +6,13 @@ resource "random_string" "rand" {
 
 locals {
   namespace = substr(join("-", [var.name, random_string.rand.result]), 0, 24)
-  projects  = ["plan", "apply"]
+  projects = ["plan", "apply"]
 }
 
 resource "aws_codebuild_project" "project" {
   count        = length(local.projects)
   name         = "${local.namespace}-${local.projects[count.index]}"
-  service_role = aws_iam_role.codebuild_role.id
+  service_role = aws_iam_role.codebuild.arn
 
   artifacts {
     type = "NO_ARTIFACTS"
@@ -32,32 +32,39 @@ resource "aws_codebuild_project" "project" {
 
 locals {
   backend = templatefile("${path.module}/templates/backend.json", { config : var.s3_backend_config, name : local.namespace })
+
   default_environment = {
     TF_IN_AUTOMATION  = "1"
-    TF_INPUT          = "1"
+    TF_INPUT          = "0"
     CONFIRM_DESTROY   = "0"
     WORKING_DIRECTORY = var.working_directory
     BACKEND           = local.backend,
   }
+
   environment = jsonencode([for k, v in merge(local.default_environment, var.environment) : { name : k, value : v, type : "PLAINTEXT" }])
 }
 
-resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket        = "${local.namespace}-codepipeline-bucket"
+resource "aws_s3_bucket" "codepipeline" {
+  bucket        = "${local.namespace}-codepipeline"
   acl           = "private"
   force_destroy = true
 }
 
 resource "aws_sns_topic" "codepipeline" {
-  name = "${local.namespace}-pipeline-topic"
+  name = "${local.namespace}-codepipeline"
+}
+
+resource "aws_codestarconnections_connection" "github" {
+  name          = "${local.namespace}-github"
+  provider_type = "GitHub"
 }
 
 resource "aws_codepipeline" "codepipeline" {
   name     = "${local.namespace}-pipeline"
-  role_arn = aws_iam_role.codepipeline_role.arn
+  role_arn = aws_iam_role.codepipeline.arn
 
   artifact_store {
-    location = aws_s3_bucket.codepipeline_bucket.bucket
+    location = aws_s3_bucket.codepipeline.bucket
     type     = "S3"
   }
 
@@ -67,16 +74,14 @@ resource "aws_codepipeline" "codepipeline" {
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["source_output"]
-
       configuration = {
-        Owner      = split("/", var.vcs_repo.identifier)[0]
-        Repo       = split("/", var.vcs_repo.identifier)[1]
-        Branch     = var.vcs_repo.branch
-        OAuthToken = var.vcs_repo.oauth_token
+        FullRepositoryId = var.vcs_repo.identifier
+        BranchName       = var.vcs_repo.branch
+        ConnectionArn    = aws_codestarconnections_connection.github.arn
       }
     }
   }
@@ -100,12 +105,12 @@ resource "aws_codepipeline" "codepipeline" {
   }
 
   dynamic "stage" {
-    for_each = ! var.auto_apply ? [1] : []
+    for_each = var.auto_apply ? [] : [1]
     content {
-      name = "Approve"
+      name = "Approval"
 
       action {
-        name     = "Approve"
+        name     = "Approval"
         category = "Approval"
         owner    = "AWS"
         provider = "Manual"

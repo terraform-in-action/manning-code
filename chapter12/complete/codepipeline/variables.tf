@@ -23,14 +23,20 @@ variable "working_directory" {
 }
 
 variable "vcs_repo" {
-  type        = object({ identifier = string, branch = string, oauth_token = string })
+  type        = object({ identifier = string, branch = string })
   description = "Settings for the workspace's VCS repository."
 }
 
 variable "environment" {
   type        = map(string)
   default     = {}
-  description = "A map of environment varaibles to use for this workspace"
+  description = "A map of environment variables to pass into pipeline"
+}
+
+variable "deployment_policy" {
+  type        = string
+  default     = null
+  description = "An optional IAM deployment policy"
 }
 
 variable "s3_backend_config" {

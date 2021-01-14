@@ -1,0 +1,16 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": [        
+          "ec2:DeleteTags",
+          "ec2:CreateTags",
+          "ec2:TerminateInstances",
+          "ec2:RunInstances",
+          "ec2:Describe*"
+          ],
+        "Effect": "Allow",
+        "Resource": "*"
+      }
+    ]
+  }
