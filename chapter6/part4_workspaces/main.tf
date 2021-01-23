@@ -1,17 +1,14 @@
 terraform {
   backend "s3" {
-    bucket         = "pokemon-q56ylfpq6bzrw3dl-state-bucket"
+    bucket         = "team-rocket-1qh28hgo0g1c-state-bucket"
     key            = "team1/my-cool-project"
     region         = "us-west-2"
     encrypt        = true
-    profile        = "swinkler"
-    role_arn       = "arn:aws:iam::215974853022:role/pokemon-q56ylfpq6bzrw3dl-tf-assume-role"
-    dynamodb_table = "pokemon-q56ylfpq6bzrw3dl-state-lock"
+    profile        = "swinkler" # this sould be changed.
+    role_arn       = "arn:aws:iam::215974853022:role/team-rocket-1qh28hgo0g1c-tf-assume-role"
+    dynamodb_table = "team-rocket-1qh28hgo0g1c-state-lock"
   }
-  required_version = "~> 0.12"
-  required_providers {
-    null = "~> 2.1"
-  }
+  required_version = "~> 0.14"
 }
 
 variable "region" {

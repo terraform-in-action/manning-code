@@ -4,8 +4,8 @@ provider "aws" {
 }
 
 module "s3backend" {
-  source    = "scottwinkler/s3backend/aws"
-  namespace = "pokemon"
+  source    = "terraform-in-action/s3backend/aws"
+  namespace = "team-rocket"
 }
 
 output "s3backend_config" {

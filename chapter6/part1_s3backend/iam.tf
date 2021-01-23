@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 locals {
-  principal_arn = var.principal_arn != null ? var.principal_arn : data.aws_caller_identity.current.arn
+  principal_arns = var.principal_arns != null ? var.principal_arns : [data.aws_caller_identity.current.arn]
 }
 
 resource "aws_iam_role" "iam_role" {
@@ -14,7 +14,7 @@ resource "aws_iam_role" "iam_role" {
         {
           "Action": "sts:AssumeRole",
           "Principal": {
-              "AWS": "${local.principal_arn}"
+              "AWS": ${jsonencode(local.principal_arns)}
           },
           "Effect": "Allow"
         }

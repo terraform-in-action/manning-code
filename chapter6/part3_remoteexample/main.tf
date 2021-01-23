@@ -1,15 +1,19 @@
 terraform {
   backend "s3" {
-    bucket   = "pokemon-state-bucket-w52hjupq"
-    key      = "pikachu/thunderbolt"
-    region   = "us-west-2"
-    encrypt  = true
-    profile  = "swinkler"
-    role_arn = "arn:aws:iam::215974853022:role/tf-assume-role"
+    bucket         = "team-rocket-1qh28hgo0g1c-state-bucket"
+    key            = "jesse/james"
+    region         = "us-west-2"
+    encrypt        = true
+    profile        = "swinkler" # this sould be changed.
+    role_arn       = "arn:aws:iam::215974853022:role/team-rocket-1qh28hgo0g1c-tf-assume-role"
+    dynamodb_table = "team-rocket-1qh28hgo0g1c-state-lock"
   }
-  required_version = "~> 0.12"
+  required_version = "~> 0.14"
   required_providers {
-    null = "~> 2.1"
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.0"
+    }
   }
 }
 
@@ -18,6 +22,6 @@ resource "null_resource" "motto" {
     always = timestamp()
   }
   provisioner "local-exec" {
-    command = "echo gotta catch em all"
+    command = "echo gotta catch em all" #A
   }
 }

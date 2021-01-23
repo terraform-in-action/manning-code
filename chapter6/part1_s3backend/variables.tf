@@ -1,13 +1,13 @@
 variable "namespace" {
   description = "The project namespace to use for unique resource naming"
-  default     = "s3backend"
+  default     = "team-rocket"
   type        = string
 }
 
-variable "principal_arn" {
-  description = "AWS principal arn allowed to assume the IAM role"
+variable "principal_arns" {
+  description = "A list of principal arns allowed to assume the IAM role"
   default     = null
-  type        = string
+  type        = list(string)
 }
 
 variable "force_destroy_state" {
