@@ -1,3 +1,3 @@
-project_id = "terraforminaction"
-namespace  = "team-pokemon"
-region     = "us-central1"
+project_id ="<your_project_id>"
+namespace  = "team-rocket"
+region     = "us-central1" 

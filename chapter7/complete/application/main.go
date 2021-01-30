@@ -7,11 +7,12 @@ import (
 )
 
 func IndexServer(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Pikachu!")
+	fmt.Fprint(w, "Automate all the things!")
 }
 
 func main() {
 	handler := http.HandlerFunc(IndexServer)
-	log.Println("Listening on :8080...")
 	log.Fatal(http.ListenAndServe(":8080", handler))
 }
+
+//

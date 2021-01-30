@@ -1,5 +1,5 @@
 locals {
-  services = [ #A
+  services = [
     "sourcerepo.googleapis.com",
     "cloudbuild.googleapis.com",
     "run.googleapis.com",
@@ -12,11 +12,11 @@ resource "google_project_service" "enabled_service" {
   project  = var.project_id
   service  = each.key
 
-  provisioner "local-exec" { #B
+  provisioner "local-exec" {
     command = "sleep 60"
   }
 
-  provisioner "local-exec" { #C
+  provisioner "local-exec" { 
     when    = destroy
     command = "sleep 15"
   }
@@ -30,7 +30,7 @@ resource "google_sourcerepo_repository" "repo" {
   name = "${var.namespace}-repo"
 }
 
-locals { #A
+locals { 
   image = "gcr.io/${var.project_id}/${var.namespace}"
   steps = [
     {
@@ -70,7 +70,7 @@ resource "google_cloudbuild_trigger" "trigger" {
       content {
         name = step.value.name
         args = step.value.args
-        env  = lookup(step.value, "env", null) #B
+        env  = lookup(step.value, "env", null) 
       }
     }
   }
@@ -80,7 +80,7 @@ data "google_project" "project" {}
 
 resource "google_project_iam_member" "cloudbuild_roles" {
   depends_on = [google_cloudbuild_trigger.trigger]
-  for_each   = toset(["roles/run.admin", "roles/iam.serviceAccountUser"]) #A
+  for_each   = toset(["roles/run.admin", "roles/iam.serviceAccountUser"])
   project    = var.project_id
   role       = each.key
   member     = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
@@ -96,7 +96,7 @@ resource "google_cloud_run_service" "service" {
   template {
     spec {
       containers {
-        image = "${local.image}:latest" #A
+        image = "us-docker.pkg.dev/cloudrun/container/hello"
       }
     }
   }

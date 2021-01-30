@@ -1,8 +1,9 @@
 resource "null_resource" "cowsay" {
-  provisioner "local-exec" { #A
+  provisioner "local-exec" {
     command = "cowsay Hello World!"
   }
-  provisioner "local-exec" { #B
+
+  provisioner "local-exec" {
     when    = destroy
     command = "cowsay -d Goodbye cruel world!"
   }

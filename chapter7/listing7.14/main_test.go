@@ -14,10 +14,11 @@ func TestGETIndex(t *testing.T) {
 		IndexServer(response, request)
 
 		got := response.Body.String()
-		want := "Pikachu!"
+		want := "Automate all the things!"
 
 		if got != want {
 			t.Errorf("got '%s', want '%s'", got, want)
 		}
 	})
 }
+Now 

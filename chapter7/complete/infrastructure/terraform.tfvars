@@ -1,3 +1,3 @@
-project_id = "terraforminaction"
-namespace  = "team-pokemon"
-region     = "us-central1"
+project_id ="tia-chapter7"
+namespace  = "team-rocket"
+region     = "us-central1" 

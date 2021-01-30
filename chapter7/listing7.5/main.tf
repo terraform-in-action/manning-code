@@ -4,4 +4,4 @@ resource "google_sourcerepo_repository" "repo" {
   ]
 
   name = "${var.namespace}-repo"
-}
+} 

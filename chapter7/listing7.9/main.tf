@@ -6,6 +6,7 @@ data "google_iam_policy" "admin" {
     ]
   }
 }
+
 resource "google_cloud_run_service_iam_policy" "policy" {
   location    = var.region
   project     = var.project_id

@@ -1,5 +1,5 @@
 locals {
-  services = [ #A
+  services = [ 
     "sourcerepo.googleapis.com",
     "cloudbuild.googleapis.com",
     "run.googleapis.com",
@@ -12,11 +12,11 @@ resource "google_project_service" "enabled_service" {
   project  = var.project_id
   service  = each.key
 
-  provisioner "local-exec" { #B
+  provisioner "local-exec" { 
     command = "sleep 60"
   }
 
-  provisioner "local-exec" { #C
+  provisioner "local-exec" {
     when    = destroy
     command = "sleep 15"
   }
@@ -27,8 +27,8 @@ resource "google_sourcerepo_repository" "repo" {
     google_project_service.enabled_service["sourcerepo.googleapis.com"]
   ]
 
-  name       = "${var.namespace}-repo"
-}
+  name = "${var.namespace}-repo"
+} 
 
 locals { #A
   image = "gcr.io/${var.project_id}/${var.namespace}"
@@ -45,11 +45,11 @@ locals { #A
     {
       name = "gcr.io/cloud-builders/docker"
       args = ["push", local.image]
-},
+    },
     {
       name = "gcr.io/cloud-builders/gcloud"
       args = ["run", "deploy", google_cloud_run_service.service.name, "--image", local.image, "--region", var.region, "--platform", "managed", "-q"]
-}
+    }
 
   ]
 }
@@ -79,12 +79,12 @@ resource "google_cloudbuild_trigger" "trigger" {
 data "google_project" "project" {}
 
 resource "google_project_iam_member" "cloudbuild_roles" {
-  depends_on = [google_cloudbuild_trigger.trigger] 
-  for_each   = toset(["roles/run.admin", "roles/iam.serviceAccountUser"])#A
+  depends_on = [google_cloudbuild_trigger.trigger]
+  for_each   = toset(["roles/run.admin", "roles/iam.serviceAccountUser"]) #A
   project    = var.project_id
   role       = each.key
   member     = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
-}
+} 
 
 resource "google_cloud_run_service" "service" {
   depends_on = [
@@ -96,7 +96,7 @@ resource "google_cloud_run_service" "service" {
   template {
     spec {
       containers {
-        image = "${local.image}:latest" #A
+        image = "us-docker.pkg.dev/cloudrun/container/hello" #A
       }
     }
   }
@@ -117,3 +117,4 @@ resource "google_cloud_run_service_iam_policy" "policy" {
   service     = google_cloud_run_service.service.name
   policy_data = data.google_iam_policy.admin.policy_data
 }
+

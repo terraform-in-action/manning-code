@@ -4,11 +4,12 @@ resource "google_cloud_run_service" "service" {
   ]
   name     = var.namespace
   location = var.region
+
   template {
     spec {
       containers {
-        image = "${local.image}:latest" #A
+        image = "us-docker.pkg.dev/cloudrun/container/hello" #A
       }
     }
   }
-}
+} 
