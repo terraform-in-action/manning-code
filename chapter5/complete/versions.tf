@@ -1,8 +1,17 @@
 terraform {
   required_version = "~> 0.14"
   required_providers {
-    archive = "~> 1.3"
-    azurerm = "~> 1.44"
-    random  = "~> 2.3"
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.45"
+    }
+    archive = {
+      source  = "hashicorp/archive"
+      version = "~> 2.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
   }
 }

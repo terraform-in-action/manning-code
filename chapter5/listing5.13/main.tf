@@ -28,14 +28,14 @@ resource "azurerm_storage_container" "storage_container" {
 }
 
 module "ballroom" {
-  source = " terraform-in-action/ballroom/azure"
+  source = "terraform-in-action/ballroom/azure"
 }
 
 resource "azurerm_storage_blob" "storage_blob" {
   name                   = "server.zip"
   storage_account_name   = azurerm_storage_account.storage_account.name
   storage_container_name = azurerm_storage_container.storage_container.name
-  type                   = "block"
+  type                   = "Block"
   source                 = module.ballroom.output_path
 }
 
@@ -90,17 +90,19 @@ resource "azurerm_application_insights" "application_insights" {
   name                = local.namespace
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name
-  application_type    = "Web"
+  application_type    = "web"
 }
 
 resource "azurerm_function_app" "function" {
-  name                      = local.namespace
-  location                  = azurerm_resource_group.default.location
-  resource_group_name       = azurerm_resource_group.default.name
-  app_service_plan_id       = azurerm_app_service_plan.plan.id
-  https_only                = true
-  storage_connection_string = azurerm_storage_account.storage_account.primary_connection_string
-  version                   = "~2"
+  name                = local.namespace
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+  app_service_plan_id = azurerm_app_service_plan.plan.id
+  https_only          = true
+
+  storage_account_name       = azurerm_storage_account.storage_account.name
+  storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
+  version                    = "~2"
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"

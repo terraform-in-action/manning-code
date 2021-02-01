@@ -1,2 +1,2 @@
-location      = "westus2"
-namespace     = "ballroominaction"
+location  = "westus2"
+namespace = "ballroominaction"
