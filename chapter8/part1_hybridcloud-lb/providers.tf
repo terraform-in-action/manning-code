@@ -1,21 +1,15 @@
 provider "aws" {
-  profile = var.aws.profile
-  region  = var.aws.region
+  profile = "<profile>"
+  region  = "us-west-2"
 }
 
 provider "azurerm" {
-  subscription_id = var.azure.subscription_id
-  client_id       = var.azure.client_id
-  client_secret   = var.azure.client_secret
-  tenant_id       = var.azure.tenant_id
+  features {}
 }
 
 provider "google" {
-  credentials = file("account.json")
-  project     = var.gcp.project_id
-  region      = var.gcp.region
+  project = "<project_id>"
+  region  = "us-east1"
 }
 
-provider "docker" {
-  host = "tcp://127.0.0.1:2375/"
-}
+provider "docker" {} #A

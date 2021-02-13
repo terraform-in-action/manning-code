@@ -1,15 +1,42 @@
+terraform {
+  required_version = "> 0.14"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.46"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.27"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
+  }
+}
+
+provider "aws" {
+  profile = "<profile>"
+  region  = "us-west-2"
+}
+
+provider "azurerm" {
+  features {}
+}
+
 module "aws" {
-  source               = "scottwinkler/nomad/aws"
-  associate_public_ips = true
+  source               = "terraform-in-action/nomad/aws"
+  associate_public_ips = true #A
 
   consul = {
-    version              = "1.6.1"
+    version              = "1.9.2"
     servers_count        = 3
     server_instance_type = "t3.micro"
   }
 
   nomad = {
-    version              = "0.9.5"
+    version              = "1.0.3"
     servers_count        = 3
     server_instance_type = "t3.micro"
     clients_count        = 3
@@ -19,22 +46,29 @@ module "aws" {
 
 
 module "azure" {
-  source               = "scottwinkler/nomad/azure"
-  azure                = var.azure
-  associate_public_ips = true
-  join_wan             = module.aws.public_ips.consul_servers
+  source               = "terraform-in-action/nomad/azure"
+  location             = "Central US"
+  associate_public_ips = true                                 #A
+  join_wan             = module.aws.public_ips.consul_servers #B
 
   consul = {
-    version              = "1.6.1"
+    version              = "1.9.2"
     servers_count        = 3
     server_instance_size = "Standard_A1"
   }
 
   nomad = {
-    version              = "0.9.5"
+    version              = "1.0.3"
     servers_count        = 3
     server_instance_size = "Standard_A1"
     clients_count        = 3
     client_instance_size = "Standard_A1"
   }
+}
+
+output "aws" {
+  value = module.aws
+}
+output "az" {
+  value = module.azure
 }

@@ -1,27 +1,31 @@
 terraform {
-  required_version = "~> 0.12"
+  required_version = "> 0.14"
   required_providers {
-    nomad = "~> 1.4"
+    nomad = {
+      source  = "hashicorp/nomad"
+      version = "~> 1.4"
+    }
   }
 }
 
-provider "nomad" {
-  address = "http://terraforminaction-7p7ma0-nomad-398143868.us-west-2.elb.amazonaws.com:4646"
+provider "nomad" { #A
+  address = "<aws.addresses.nomad_ui>"
   alias   = "aws"
 }
 
-provider "nomad" {
-  address = "http://terraforminaction-t2ndbv-nomad.westus.cloudapp.azure.com:4646"
+provider "nomad" { #A
+  address = "<azure.addresses.nomad_ui>"
   alias   = "azure"
 }
 
 module "mmorpg" {
-  source   = "scottwinkler/mmorpg/nomad"
-  fabio_db = "tcp://terraforminaction-t2ndbv-fabio.westus.cloudapp.azure.com:27017"
-  fabio_lb = "http://terraforminaction-7p7ma0-fabio-6ad80758f451730b.elb.us-west-2.amazonaws.com:9999"
-  providers = {
-    nomad.aws   = "nomad.aws"
-    nomad.azure = "nomad.azure"
+  source   = "terraform-in-action/mmorpg/nomad"
+  fabio_db = "<azure.addresses.fabio_db>" #B
+  fabio_lb = "<aws.addresses.fabio_lb>" #B
+  
+  providers = {               #C                                                                        
+    nomad.aws   = nomad.aws
+    nomad.azure = nomad.azure
   }
 }
 

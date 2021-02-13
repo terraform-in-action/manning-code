@@ -1,13 +1,13 @@
 module "aws" {
-  source = "scottwinkler/vm/cloud//modules/aws"
-  environment = {
-    name             = "AWS"
-    background_color = "orange"
+  source = "terraform-in-action/vm/cloud//modules/aws" #A
+  environment = { 
+    name             = "AWS" #B
+    background_color = "orange" #B
   }
 }
 
 module "azure" {
-  source = "scottwinkler/vm/cloud//modules/azure"
+  source = "terraform-in-action/vm/cloud//modules/azure" #A
   environment = {
     name             = "Azure"
     background_color = "blue"
@@ -15,8 +15,7 @@ module "azure" {
 }
 
 module "gcp" {
-  source     = "scottwinkler/vm/cloud//modules/gcp"
-  project_id = var.gcp.project_id
+  source     = "terraform-in-action/vm/cloud//modules/gcp" #A
   environment = {
     name             = "GCP"
     background_color = "red"
@@ -24,10 +23,10 @@ module "gcp" {
 }
 
 module "loadbalancer" {
-  source = "scottwinkler/vm/cloud//modules/loadbalancer"
+  source = "terraform-in-action/vm/cloud//modules/loadbalancer" #A
   addresses = [
-    module.aws.network_address,
-    module.azure.network_address,
-    module.gcp.network_address,
+    module.aws.network_address, #C
+    module.azure.network_address, #C
+    module.gcp.network_address, #C
   ]
 }
