@@ -1,31 +1,32 @@
 {
-    "version": 4,
-    "terraform_version": "0.13.0", 
-    "serial": 1, 
-    "lineage": "0fe3ddc2-1d7e-1116-d554-c030de42d9ea",
-    "outputs": {},
-    "resources": [
-      {
-        "mode": "managed",
-        "type": "local_file",
-        "name": "literature",
-        "provider": "provider[\"registry.terraform.io/hashicorp/local\"]",
-        "instances": [
-          {
-            "schema_version": 0,
-            "attributes": { 
-              "content": "Sun Tzu said: The art of war is of vital importance to the State.\n\nIt is a matter of life and death, a road either to safety or to \nruin. Hence it is a subject of inquiry which can on no account be\nneglected.\n",
-              "content_base64": null,
-              "directory_permission": "0777",
-              "file_permission": "0777",
-              "filename": "art_of_war.txt",
-              "id": "907b35148fa2bce6c92cba32410c25b06d24e9af",
-              "sensitive_content": null
-            },
-            "private": "bnVsbA=="
-          }
-        ]
-      }
-    ]
-  }
-  
+  "version": 4,
+  "terraform_version": "0.15.0",
+  "serial": 1,
+  "lineage": "df1bf9d6-c6cf-f9cb-34b7-dc0ba10d5a1d",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "local_file",
+      "name": "literature",
+      "provider": "provider[\"registry.terraform.io/hashicorp/local\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "content": "Sun Tzu said: The art of war is of vital importance to the State.\n\nIt is a matter of life and death, a road either to safety or to \nruin. Hence it is a subject of inquiry which can on no account be\nneglected.\n",
+            "content_base64": null,
+            "directory_permission": "0777",
+            "file_permission": "0777",
+            "filename": "art_of_war.txt",
+            "id": "907b35148fa2bce6c92cba32410c25b06d24e9af",
+            "sensitive_content": null,
+            "source": null
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA=="
+        }
+      ]
+    }
+  ]
+}
