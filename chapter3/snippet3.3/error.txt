@@ -1,8 +1,9 @@
-Error: Invalid value for variable
-
-  on main.tf line 5:
-   5: variable "words" {
-
-At least 11 noun must be supplied.
-
-This was checked by the validation rule at main.tf:15,3-13.
+╷
+│ Error: Invalid value for variable
+│
+│   on madlibs.tf line 5:
+│    5: variable "words" {
+│
+│ At least 20 nouns must be supplied.
+│
+│ This was checked by the validation rule at madlibs.tf:14,1-11.

@@ -1,9 +1,13 @@
 terraform {
-  required_version = "~> 0.13"
+  required_version = ">= 0.15"
   required_providers {
-    random = "~> 2.2"
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
   }
 }
+
 
 variable "words" {
   description = "A word pool to use for Mad Libs"
