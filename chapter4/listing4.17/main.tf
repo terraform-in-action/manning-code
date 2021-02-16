@@ -3,7 +3,7 @@ module "iam_instance_profile" {
   actions = ["logs:*", "rds:*"]
 }
 
-data "template_cloudinit_config" "config" {
+data "cloudinit_config" "config" {
   gzip          = true
   base64_encode = true
   part {
@@ -25,7 +25,7 @@ resource "aws_launch_template" "webserver" {
   name_prefix   = var.namespace
   image_id      = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  user_data     = data.template_cloudinit_config.config.rendered
+  user_data     = data.cloudinit_config.config.rendered
   key_name      = var.ssh_keypair
   iam_instance_profile {
     name = module.iam_instance_profile.name

@@ -1,13 +1,13 @@
 resource "random_password" "password" { #A
   length           = 16
   special          = true
-  override_special = "_%@"
+  override_special = "_%@/'\""
 }
 
 resource "aws_db_instance" "database" {
   allocated_storage      = 10
   engine                 = "mysql"
-  engine_version         = "5.7"
+  engine_version         = "8.0"
   instance_class         = "db.t2.micro"
   identifier             = "${var.namespace}-db-instance"
   name                   = "pets"
