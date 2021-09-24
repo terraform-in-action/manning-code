@@ -16,7 +16,7 @@ variable "num_files" {
 
 locals {
   uppercase_words = {for k,v in var.words : k => [for s in v : upper(s)]}
-    }
+}
 
 resource "random_shuffle" "random_nouns" {
   count = var.num_files
