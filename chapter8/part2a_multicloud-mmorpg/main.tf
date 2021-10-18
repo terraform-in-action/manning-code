@@ -53,16 +53,16 @@ module "azure" {
 
   consul = {
     version              = "1.9.2"
-    servers_count        = 3
-    server_instance_size = "Standard_A1"
+    servers_count        = 1
+    server_instance_size = "Standard_A1_v2"
   }
 
   nomad = {
     version              = "1.0.3"
-    servers_count        = 3
-    server_instance_size = "Standard_A1"
-    clients_count        = 3
-    client_instance_size = "Standard_A1"
+    servers_count        = 1
+    server_instance_size = "Standard_A1_v2"
+    clients_count        = 1
+    client_instance_size = "Standard_A1_v2"
   }
 }
 
