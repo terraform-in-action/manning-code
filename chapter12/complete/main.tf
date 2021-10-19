@@ -13,7 +13,7 @@ module "s3backend" { #A
 }
 
 module "codepipeline" { #B
-  source   = "./modules/codepipeline"
+  source   = "./codepipeline"
   name     = "terraform-in-action"
   vcs_repo = var.vcs_repo
 auto_apply = true
@@ -26,8 +26,8 @@ auto_apply = true
 }
 
 terraform {
-  required_version = "~> 0.14"
+  required_version = "> 0.14"
   required_providers {
-    aws = "= 3.22"
+    aws = "= 3.28"
   }
 }
