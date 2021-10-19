@@ -6,7 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	sdk "github.com/scottwinkler/go-petstore"
+	sdk "github.com/terraform-in-action/go-petstore"
 )
 
 func TestAccPSPet_basic(t *testing.T) {
