@@ -34,7 +34,7 @@ func TestTerraformModule(t *testing.T) {
 		t.Error(err)
 	}
 
-	err = tf.Init(ctx, tfexec.Upgrade(true), tfexec.LockTimeout("60s"))
+	err = tf.Init(ctx, tfexec.Upgrade(true))
 	if err != nil {
 		t.Error(err)
 	}
