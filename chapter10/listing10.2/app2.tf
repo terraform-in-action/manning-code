@@ -4,7 +4,7 @@ resource "aws_iam_user" "app2" {
 }
 
 resource "aws_iam_user_policy" "app2" {
-  user   = aws_iam_user.app1.name
+  user   = aws_iam_user.app2.name
   policy = <<-EOF
     {
       "Version": "2012-10-17",
