@@ -21,4 +21,3 @@ func TestGETIndex(t *testing.T) {
 		}
 	})
 }
-Now 
