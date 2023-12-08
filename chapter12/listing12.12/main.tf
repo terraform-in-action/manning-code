@@ -80,3 +80,4 @@ resource "aws_codepipeline" "codepipeline" {
       }
     }
   }
+}
